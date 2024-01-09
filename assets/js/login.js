@@ -37,7 +37,6 @@ sign.addEventListener('click', (event) => {
     // Sign up inputs
     const checkBox = document.getElementById("chk");
     const userName = document.getElementById("signUpName").value;
-    const phoneNumber = document.getElementById("phoneNumber").value;
     const signUpEmail = document.getElementById("signUpEmail").value;
     const signUpPassword = document.getElementById("signUpPassword").value;
     const signUpImage = document.getElementById("imageInput").files[0];
@@ -45,7 +44,6 @@ sign.addEventListener('click', (event) => {
     // Create FormData object
     var formData = new FormData();
     formData.append('username', userName);
-    formData.append('phonenumber', phoneNumber);
     formData.append('email', signUpEmail);
     formData.append('password', signUpPassword);
     formData.append('picture', signUpImage);
@@ -54,7 +52,7 @@ sign.addEventListener('click', (event) => {
     // AJAX request
     $.ajax({
         type: "POST",
-        url: "index.php?page=login", // Ensure this URL is correct
+        url: "index.php?page=authentication",
         data: formData,
         contentType: false,
         processData: false,
@@ -87,8 +85,6 @@ sign.addEventListener('click', (event) => {
                 var mesg = "";
                 if (error.username_err !== false) {
                     mesg = error.username_err;
-                } else if (error.phonenumber_err !== false) {
-                    mesg = error.phonenumber_err;
                 } else if (error.email_err !== false) {
                     mesg = error.email_err;
                 } else if (error.password_err !== false) {
@@ -121,7 +117,7 @@ login.addEventListener('click', (event) => {
     const loginPassword = document.getElementById("loginPassword").value;
     $.ajax({
         type: "POST",
-        url: "index.php?page=login",
+        url: "index.php?page=authentication",
         data: {
             req: "login",
             email: loginEmail,
@@ -129,13 +125,14 @@ login.addEventListener('click', (event) => {
         },
         success: (response) => {
             const data = JSON.parse(response);
+            console.log(data);
             if (data.success) {
                 console.log(data.success);
-                loginForm.style.display = 'none';
-                spinnerWrapper.style.display = 'block';
-                setTimeout(() => {
-                    window.location.href = 'index.php?page=home&success';
-                }, 3000);
+                // loginForm.style.display = 'none';
+                // spinnerWrapper.style.display = 'block';
+                // setTimeout(() => {
+                //     window.location.href = 'index.php?page=home&success';
+                // }, 3000);
 
             } else if (data.error) {
                 console.log(data.error);
