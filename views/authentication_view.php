@@ -17,13 +17,6 @@
         <div class="signup">
             <form class="form" autocomplete="off">
                 <label for="chk" aria-hidden="true">Login</label>
-                <?php if (!empty($errors)): ?>
-                    <div class="error-messages">
-                        <?php foreach ($errors as $error): ?>
-                            <p style="color: #f80e0e;position: absolute;top: 80px;left: 26%"><?= htmlspecialchars($error) ?></p>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
                 <input type="email" id="loginEmail" placeholder="Email" name="email" class="input" autocomplete="off">
                 <div class="password-container">
                     <input type="password" id="loginPassword" placeholder="Password" name="password" class="input"
@@ -32,7 +25,7 @@
                 <div class="toggle-label" >Show Password
                     <input id="toggleBtn" onclick="togglePassword()" type="checkbox">
                 </div>
-                <button class="btn">
+                <button id="loginBtn" class="btn">
                     <svg height="40" width="40" fill="#FFFFFF" data-name="Layer 1" id="Layer_1" class="sparkle" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -46,14 +39,11 @@
                     </svg>
                     <span class="text">Sign in</span>
                 </button>
-
-                <!--                <a id="forget-btn" class="forget_btn">Forget Password?</a>-->
             </form>
         </div>
         <div class="login">
             <form autocomplete="off" enctype="multipart/form-data">
                 <label for="chk" class="mb-28" aria-hidden="true">Register</label>
-                <!-- Input for uploading/selecting an image -->
                 <input class="login-input" name="picture" type="file" accept="image/*" id="imageInput"
                        style="display: none">
 
@@ -66,11 +56,10 @@
                     </div>
                 </label>
                 <input type="text" id="signUpName" placeholder="Username" name="username" class="input">
-                <input id="phoneNumber" type="number" placeholder="Phone Number" name="phonenumber" class="input">
                 <input id="signUpEmail" type="email" placeholder="Email" name="email" class="input">
                 <input id="signUpPassword" type="password" placeholder="Password" name="password" class="input">
 <!--                <button type="button" id="signUp" name="sign">Sign up</button>-->
-                <button class="cssbuttons-io-button">
+                <button id="signUp" class="cssbuttons-io-button">
                     Sign up
                     <div class="icon">
                         <svg
