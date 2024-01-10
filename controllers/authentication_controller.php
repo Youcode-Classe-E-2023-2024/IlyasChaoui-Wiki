@@ -46,11 +46,14 @@ if (isset($_POST["req"]) && $_POST["req"] == "login") {
         echo json_encode(["error" => "Password is incorrect."]);
     } else {
         $checkLogin = new User($userChecker["user_id"]);
-        if ($userChecker["role"] == "admin")
-            $checkLogin->login($userChecker["user_id"], "dashboard");
-        else
-            $checkLogin->login($userChecker["user_id"], "home");
-        echo json_encode(["success" => "you are logged"]);
+        $access = "home";
+        if ($userChecker["role"] == "admin") {
+            $access = "dashboard";
+            $checkLogin->login($userChecker["user_id"], $access);
+        } else
+            $checkLogin->login($userChecker["user_id"], $access);
+
+        echo json_encode(["success" => $access]);
     }
     exit;
 }
