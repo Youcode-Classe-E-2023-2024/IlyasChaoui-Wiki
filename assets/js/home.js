@@ -1,4 +1,3 @@
-
 // burger menu config
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -39,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
+
 
 
 
