@@ -25,6 +25,17 @@ class User
         $this->password = $user['password'];
     }
 
+    static function getUser($id)
+    {
+        global $db;
+        $stmt = $db->prepare("SELECT * FROM users WHERE user_id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     static function getAll()
     {
         global $db;
@@ -38,7 +49,6 @@ class User
             $_SESSION["admin"] = true;
         $_SESSION["user_id"] = $user_id;
         $_SESSION["login"] = true;
-        header('Location: index.php?page=' . $access);
     }
 
     function logout () {
@@ -79,11 +89,11 @@ class User
         $stmt->execute();
     }
 
-    function edit()
-    {
-        global $db;
-        return $db->query("UPDATE users SET users_email = '$this->email', users_username = '$this->username' WHERE users_id = '$this->id'");
-    }
+//    function edit()
+//    {
+//        global $db;
+//        return $db->query("UPDATE users SET users_email = '$this->email', users_username = '$this->username' WHERE users_id = '$this->id'");
+//    }
 
 
     public function setPassword($pwd)
