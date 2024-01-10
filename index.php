@@ -13,29 +13,28 @@ spl_autoload_register(function ($class) {
 // $con = $database->dbh;
 
 
-// Determine the requested page
+$page = 'home';
 if (isset($_GET['page']) && !empty($_GET['page'])) {
-    $page = trim(strtolower($_GET['page']));
-} else {
-    $page = 'home';
+    $newPage = trim(strtolower($_GET['page']));
+
+    if (!(isset($_SESSION["login"]) && ($newPage == "authentication"))) {
+        $page = $newPage;
+    }
 }
 
-if (isset($_SESSION["login"]) && isset($_GET['page']) && ($_GET['page'] == "login" || $_GET['page'] == "register")) {
-    $page = 'home';
-} else if (isset($_GET['page']) && !empty($_GET['page'])) {
-    $page = trim(strtolower($_GET['page']));
-} else {
-    $page = 'home';
-}
-
-// Check if the controller for the determined page exists
 $all_pages = scandir('controllers');
 if (in_array($page . '_controller.php', $all_pages)) {
     include_once 'controllers/' . $page . '_controller.php';
-    if (isset($_SESSION["admin"]) && $page == "dashboard")
+
+    if (isset($_SESSION["admin"]) && $page == "dashboard") {
         include_once 'views/dashboard_layout.php';
-    else
+    } else {
         include_once 'views/_layout.php';
+    }
 } else {
-    header('Location: 404.html');
+    header('HTTP/1.0 404 Not Found');
+    include_once 'views/404_view.php';
+    exit();
 }
+
+?>
