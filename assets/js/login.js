@@ -133,6 +133,7 @@ login.addEventListener('click', (event) => {
                 // setTimeout(() => {
                 //     window.location.href = 'index.php?page=home&success';
                 // }, 3000);
+                window.location.href = `index.php?page=${data.success}&success`;
 
             } else if (data.error) {
                 console.log(data.error);
@@ -146,46 +147,4 @@ login.addEventListener('click', (event) => {
     })
 })
 
-requestEmail.addEventListener('click', (event) => {
-    event.preventDefault();
 
-    const requestEmailValue = document.getElementById("requestEmail").value;
-    $.ajax({
-        type: "POST",
-        url: "index.php?page=login",
-        data: {
-            req: "request",
-            email: requestEmailValue,
-        },
-        success: (response) => {
-            const data = JSON.parse(response);
-            if (data.success) {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer);
-                        toast.addEventListener('mouseleave', Swal.resumeTimer);
-                    }
-                });
-
-                Toast.fire({
-                    icon: "success",
-                    title: data.success
-                });
-
-                setTimeout(() => {
-                    window.location.href = "index.php?page=login&success";
-                }, 3000);
-            } else if (data.error) {
-                Swal.fire({icon: "error", title: "Error", text: data.error});
-            }
-        },
-        error: (error) => {
-            console.error("AJAX error:", error);
-        }
-    });
-});
