@@ -8,7 +8,6 @@
     <div class="fixed w-full flex items-center  justify-between h-14 text-white z-10">
         <div
                 class="flex items-center justify-start md:justify-center pl-3 z-20 w-14 md:w-64 h-28 bg-gray-900 border-none">
-            <img src="./assets/img/Alpha%20Tech%20Logo.gif" class="mr-20" alt="" style="margin-left: -10px">
         </div>
         <div class="flex items-center mt-6 h-20 bg-gray-800 header-right">
             <!-- component -->
@@ -229,7 +228,7 @@
                                             </div>
                                         </div>
                                         <div class="flex flex-row justify-between">
-                                            <button id="addTagBtn" type="button" name="add_tag"
+                                            <button id="addTagBtn" type="submit" name="add_tag"
                                                     class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                 <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor"
                                                      viewBox="0 0 20 20"
@@ -282,9 +281,139 @@
                                             </tr>
                                             </thead>
 
-                                            <tbody id="tag-section" class="divide-y bg-gray-800 divide-gray-700">
+                                            <?php foreach ($tags as $tag) { ?>
+                                                <tbody id="tag-section" class="divide-y bg-gray-800 divide-gray-700">
+                                                <td class="py-4 px-6 text-sm text-center font-medium whitespace-nowrap text-white">
+                                                    <?= $tag["tag_id"] ?>
+                                                </td>
+                                                <td class="py-4 px-6 text-sm text-center font-medium whitespace-nowrap text-white">
+                                                    <?= $tag["tag"] ?>
+                                                </td>
+                                                <td class="py-4 px-6 text-sm flex justify-center font-medium text-right whitespace-nowrap">
+                                                    <button data-tag-id=" <?= $tag["tag"] ?>" name="deleteTag"
+                                                            data-modal-target="popup-modal"
+                                                            data-modal-toggle="popup-modal"
+                                                            class="delete-tag block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-800"
+                                                            type="button">
+                                                        Delete
+                                                    </button>
+                                                    <button data-tag-id=" <?= $tag["tag_id"] ?>"
+                                                            data-tag-name=" <?= $tag["tag"] ?>"
+                                                            data-modal-target="select-modal"
+                                                            data-modal-toggle="select-modal"
+                                                            class="editBtn block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                            type="button">
+                                                        Edit
+                                                    </button>
+                                                </td>
+                                                </tbody>
+                                                <div id="select-modal" tabindex="-1" aria-hidden="true"
+                                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                    <div class="relative p-4 w-full max-w-md max-h-full">
+                                                        <!-- Modal content -->
+                                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                            <!-- Modal header -->
+                                                            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                    Edit Tag
+                                                                </h3>
+                                                                <button type="button"
+                                                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                                        data-modal-toggle="select-modal">
+                                                                    <svg class="w-3 h-3" aria-hidden="true"
+                                                                         xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                         viewBox="0 0 14 14">
+                                                                        <path stroke="currentColor"
+                                                                              stroke-linecap="round"
+                                                                              stroke-linejoin="round" stroke-width="2"
+                                                                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                    </svg>
+                                                                    <span class="sr-only">Close modal</span>
+                                                                </button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <form action="index.php?page=dashboard&add_tag=true"
+                                                                  method="post" id="productForm"
+                                                                  class="user-form p-4 md:p-5">
+                                                                <div id="Parent_form" class="flex flex-col">
+                                                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                                                                        <div class="col-span-2">
+                                                                            <label for="name"
+                                                                                   class="block mb-2 text-sm font-medium text-white">Tag
+                                                                                name</label>
+                                                                            <input type="hidden" name="tag_id"
+                                                                                   id="editTagId" value="">
+                                                                            <input type="text" name="tag" id="editInput"
+                                                                                   value=""
+                                                                                   class="input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                                                   placeholder="Type product name">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flex flex-row justify-between">
+                                                                    <button id="addTagBtn" type="submit" name="editTag"
+                                                                            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                                        <svg class="me-1 -ms-1 w-5 h-5"
+                                                                             fill="currentColor"
+                                                                             viewBox="0 0 20 20"
+                                                                             xmlns="http://www.w3.org/2000/svg">
+                                                                            <path fill-rule="evenodd"
+                                                                                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                                                  clip-rule="evenodd"></path>
+                                                                        </svg>
+                                                                        Edit Tag
+                                                                    </button>
+                                                                    <hr>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="popup-modal" tabindex="-1"
+                                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                    <div class="relative p-4 w-full max-w-md max-h-full">
+                                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                            <button type="button" id="modal_body"
+                                                                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                                    data-modal-hide="popup-modal">
+                                                                <svg class="w-3 h-3" aria-hidden="true"
+                                                                     xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                     viewBox="0 0 14 14">
+                                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                                          stroke-linejoin="round" stroke-width="2"
+                                                                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                </svg>
+                                                                <span class="sr-only">Close modal</span>
+                                                            </button>
+                                                            <div class="p-4 md:p-5  text-center">
+                                                                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+                                                                     aria-hidden="true"
+                                                                     xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                     viewBox="0 0 20 20">
+                                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                                          stroke-linejoin="round" stroke-width="2"
+                                                                          d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                                </svg>
+                                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                                                    Are you sure you want to
+                                                                    delete this product?</h3>
 
-                                            </tbody>
+                                                                <a href="index.php?page=dashboard&add_tag=true&tag_id=<?= $tag['tag_id'] ?>">
+                                                                    <button
+                                                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                                                                        Yes, I'm sure
+                                                                    </button>
+                                                                </a>
+
+                                                                <button data-modal-hide="popup-modal" type="button"
+                                                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                                                    No, cancel
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
                                         </table>
 
                                     </div>
@@ -296,42 +425,6 @@
             </div>
         </div>
         <!-- tag Table -->
-        <div id="popup-modal" tabindex="-1"
-             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <button type="button" id="modal_body"
-                            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                            data-modal-hide="popup-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                    <div class="p-4 md:p-5 text-center">
-                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                        </svg>
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
-                            delete this product?</h3>
-                        <a href="index.php?page=dashboard&tag_id=<?= $tag['id'] ?>">
-                            <button data-modal-hide="popup-modal" type="button"
-                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
-                                Yes, I'm sure
-                            </button>
-                        </a>
-                        <button data-modal-hide="popup-modal" type="button"
-                                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                            No, cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- category Table -->
         <div id="product_section" class=" mt-4 mx-4">
             <h2 class="font-bold mt-10 text-center mb-10">All categories</h2>
@@ -355,7 +448,7 @@
                                 <!-- Modal header -->
                                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-600">
                                     <h3 class="text-xl font-semibold text-white">
-                                        Sign in to our platform
+                                        Add New Category
                                     </h3>
                                     <button type="button"
                                             class="end-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white"
@@ -403,18 +496,144 @@
 
 
                     <table class="w-full">
-                        <thead>
-                        <tr
-                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-700 bg-gray-50 text-gray-400 bg-gray-800">
-                            <th class="px-4 py-3">Category id</th>
-                            <th class="px-4 py-3">Category name</th>
-                            <th class="px-4 py-3">Operations</th>
+                        <thead class="bg-gray-700">
+                        <tr>
+                            <th scope="col"
+                                class="py-3 px-6 text-xs text-center bg-gray-500 font-medium tracking-wider text-left uppercase text-gray-400">
+                                Category id
+                            </th>
+                            <th scope="col"
+                                class="py-3 px-6 text-xs text-center bg-gray-500 font-medium tracking-wider text-left uppercase text-gray-400">
+                                Category Name
+                            </th>
+                            <th scope="col"
+                                class="py-3 px-6 text-xs text-center bg-gray-500 font-medium tracking-wider text-left uppercase text-gray-400">
+                                Operations
+                            </th>
+                            <th scope="col" class="p-4 ">
+                                <span class="sr-only">Delete</span>
+                            </th>
 
+                            <th scope="col" class="p-4">
+                                <span class="sr-only">Edit</span>
+                            </th>
                         </tr>
                         </thead>
-                        <tbody id="users-list-section"
-                               class=" divide-y divide-gray-700 bg-gray-800 userscontainer">
-                        </tbody>
+                        <?php foreach ($categories as $category) { ?>
+                            <tbody id="tag-section" class="divide-y bg-gray-800 divide-gray-700">
+                            <td class="py-4 px-6 text-sm text-center font-medium whitespace-nowrap text-white">
+                                <?= $category["category_id"] ?>
+                            </td>
+                            <td class="py-4 px-6 text-sm text-center font-medium whitespace-nowrap text-white">
+                                <?= $category["category"] ?>
+                            </td>
+                            <td class="py-4 px-6 text-sm flex justify-center font-medium text-right whitespace-nowrap">
+                                <input type="hidden" value="<?= $category["category_id"] ?>">
+                                <button data-modal-target="default-modal" data-modal-toggle="default-modal"
+                                        class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-blue-800"
+                                        type="button">
+                                    Delete
+                                </button>
+                                <button data-modal-target="progress-modal" data-modal-toggle="progress-modal"
+                                        data-category-id=" <?= $category["category_id"] ?>"
+                                        data-category-name=" <?= $category["category"] ?>"
+                                        class="categoryEditBtn block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        type="button">
+                                    Edit
+                                </button>
+                            </td>
+                            </tbody>
+                            <div id="progress-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-md max-h-full">
+                                    <!-- Modal content -->
+                                    <form action="index.php?page=dashboard&edit_category=true"
+                                          method="post" id="productForm"
+                                          class="user-form p-4 md:p-5">
+                                        <div id="Parent_form" class="flex flex-col">
+                                            <div class="grid gap-4 mb-4 grid-cols-2">
+                                                <div class="col-span-2">
+                                                    <label for="name"
+                                                           class="block mb-2 text-sm font-medium text-white">Tag
+                                                        name</label>
+                                                    <input type="hidden" name="category_id"
+                                                           id="editCategoryId" value="">
+                                                    <input type="text" name="category" id="categoryEditInput"
+                                                           value=""
+                                                           class="category-input bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                           placeholder="Type product name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-row justify-between">
+                                            <button id="addCategoryBtn" type="submit" name="editCategory"
+                                                    class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                <svg class="me-1 -ms-1 w-5 h-5"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 20 20"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                          clip-rule="evenodd"></path>
+                                                </svg>
+                                                Edit category
+                                            </button>
+                                            <hr>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="default-modal" tabindex="-1" aria-hidden="true"
+                                 class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <!-- Modal header -->
+                                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                Terms of Service
+                                            </h3>
+                                            <button type="button"
+                                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    data-modal-hide="default-modal">
+                                                <svg class="w-3 h-3" aria-hidden="true"
+                                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                          stroke-linejoin="round" stroke-width="2"
+                                                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="p-4 md:p-5  text-center">
+                                            <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+                                                 aria-hidden="true"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                 viewBox="0 0 20 20">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                      stroke-linejoin="round" stroke-width="2"
+                                                      d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                            </svg>
+                                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                                Are you sure you want to
+                                                delete this product?</h3>
+
+                                            <a href="index.php?page=dashboard&add_tag=true&category_id=<?= $category['category_id'] ?>">
+                                                <button
+                                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                                                    Yes, I'm sure
+                                                </button>
+                                            </a>
+
+                                            <button data-modal-hide="popup-modal" type="button"
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                                                No, cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </table>
                 </div>
             </div>
@@ -574,7 +793,21 @@
         <!-- ./External resources -->
     </div>
 </div>
-
 <script src="./assets/js/dashboard.js"></script>
+<?php if (isset($_GET["add_tag"])) { ?>
+    <script>
+        document.getElementById("dashboard_section").classList.add("hidden");
+        document.getElementById("user_section").classList.remove("hidden");
+        document.getElementById("product_section").classList.add("hidden");
+    </script>
+<?php } ?>
+
+<?php if (isset($_GET["add_category"])) { ?>
+    <script>
+        document.getElementById("dashboard_section").classList.add("hidden");
+        document.getElementById("user_section").classList.add("hidden");
+        document.getElementById("product_section").classList.remove("hidden");
+    </script>
+<?php } ?>
 
 
