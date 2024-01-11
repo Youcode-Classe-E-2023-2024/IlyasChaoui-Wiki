@@ -14,34 +14,28 @@ if (isset($_POST['logout'])) {
     $logout->logout();
 }
 
-if (isset($_GET['deleteTag']) && $_GET['deleteTag'] == 'true') {
-    if (isset($_GET['tag_id'])) {
-        $tag_id = $_GET['tag_id'];
-        Tag::deleteTag($tag_id);
-        header('Location: index.php?page=dashboard');
-        exit();
-    }
+$tags = Tag::getTags();
+
+if(isset($_GET["tag_id"])) {
+    $tagId = filter_input(INPUT_GET, "tag_id", FILTER_SANITIZE_SPECIAL_CHARS);
+    Tag::deleteTag($tagId);
+    header("location: index.php?page=dashboard&add_tag=true");
 }
 
-if(isset($_POST["delete_tag"])) {
+if(isset($_POST["editTag"])) {
+    $tag = filter_input(INPUT_POST, "tag", FILTER_SANITIZE_SPECIAL_CHARS);
     $tagId = filter_input(INPUT_POST, "tag_id", FILTER_SANITIZE_SPECIAL_CHARS);
-    Tag::deleteTag($tagId);
-    echo "tag deleted successfully";
-    exit;
+    Tag::updateTag($tag, $tagId);
+    header("location: index.php?page=dashboard&add_tag=true");
 }
 
 if(isset($_POST["add_tag"])) {
     $tag = filter_input(INPUT_POST, "tag", FILTER_SANITIZE_SPECIAL_CHARS);
     Tag::addTag($tag);
-    echo "tag added successfully";
     exit;
 }
 
-if(isset($_GET["get_tags"])) {
-    $tags = Tag::getTags();
-    echo json_encode($tags);
-    exit;
-}
+$categories = category::getCategories();
 
 if(isset($_POST["add_category"])) {
     $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -49,6 +43,22 @@ if(isset($_POST["add_category"])) {
     echo "category added successfully";
     exit;
 }
+
+if(isset($_GET["edit_category"])) {
+    $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_SPECIAL_CHARS);
+    $categoryId = filter_input(INPUT_POST, "category_id", FILTER_SANITIZE_SPECIAL_CHARS);
+    Category::updateCategory($category, $categoryId);
+
+    header("location: index.php?page=dashboard&add_category=true");
+}
+
+if(isset($_GET["category_id"])) {
+    $categoryId = filter_input(INPUT_GET, "category_id", FILTER_SANITIZE_SPECIAL_CHARS);
+    Category::deleteCategory($categoryId);
+    header("location: index.php?page=dashboard&add_category=true");
+}
+
+
 
 
 
