@@ -8,7 +8,7 @@ class Category {
         $stmt->execute();
     }
 
-    function updateCategory($category, $category_id) {
+    static function updateCategory($category, $category_id) {
         global $db;
         $sql = "UPDATE category SET category = :category WHERE category_id = :category_id";
         $stmt = $db->prepare($sql);
@@ -17,7 +17,7 @@ class Category {
         $stmt->execute();
     }
 
-    function deleteCategory($category_id) {
+    static function deleteCategory($category_id) {
         global $db;
         $sql = "DELETE FROM category WHERE category_id = :category_id";
         $stmt = $db->prepare($sql);
@@ -25,7 +25,7 @@ class Category {
         $stmt->execute();
     }
 
-    function getCategories() {
+    static function getCategories() {
         global $db;
         $sql = "SELECT * FROM category";
         $stmt = $db->prepare($sql);
