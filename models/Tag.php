@@ -8,7 +8,7 @@ class Tag {
         $stmt->execute();
     }
 
-    function updateTag($tag, $tag_id) {
+    static function updateTag($tag, $tag_id) {
         global $db;
         $sql = "UPDATE tag SET tag = :tag WHERE tag_id = :tag_id";
         $stmt = $db->prepare($sql);
@@ -23,6 +23,7 @@ class Tag {
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':tag_id', $tag_id);
         $stmt->execute();
+        return true;
     }
 
     static function getTags() {
