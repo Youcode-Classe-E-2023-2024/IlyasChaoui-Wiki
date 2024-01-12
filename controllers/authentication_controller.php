@@ -18,7 +18,6 @@ if (isset($_POST["req"]) && $_POST["req"] == "signup") {
         "picture_err" => Validation::pictureValidation($fileName)
     ];
 
-
     if (array_filter($errors)) {
         // Handle errors
         echo json_encode(["errors" => $errors]);
