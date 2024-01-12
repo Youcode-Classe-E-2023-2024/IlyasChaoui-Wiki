@@ -13,6 +13,27 @@ class Validation
         return false;
     }
 
+    static function validateTag($tag )
+    {
+        if (empty($tag)) {
+            return "Tag is required";
+        } elseif (!preg_match('/^[a-zA-Z0-9]{3,}$/', $tag)) {
+            return "Invalid tag. Tag should be at least 3 characters long.";
+        } elseif(Tag::CheckTag( $tag)){
+            return "Tag already exists.";
+        }
+        return false;
+    }
+    static function validateCategory($category)
+    {
+        if (empty($category)) {
+            return "Category is required";
+        } elseif (!preg_match('/^[a-zA-Z0-9]{3,}$/', $category)) {
+            return "Invalid category. Category should be at least 3 characters long.";
+        } elseif (Category::CheckCategory( $category))
+        return false;
+    }
+
     static function userChecker($email, $db)
     {
         if (User::user_checker($email, $db)) {
@@ -60,7 +81,7 @@ class Validation
 
     static function handleFileUpload()
     {
-        if (array_key_exists("picture", $_FILES)){
+        if (array_key_exists("picture", $_FILES)) {
             $targetDir = "./assets/img/";
             $fileName = basename($_FILES["picture"]["name"]);
             $targetFilePath = $targetDir . $fileName;
@@ -70,7 +91,8 @@ class Validation
             if (move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFilePath)) {
                 return $fileName;
             }
-        }return false;
+        }
+        return false;
     }
 
 }
