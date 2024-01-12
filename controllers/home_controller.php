@@ -9,6 +9,7 @@ if (isset($_POST['logout'])) {
     $logout = new User($_SESSION["user_id"]);
     $logout->logout();
 }
+//dd($_SESSION["admin"]);
 
 $categories = category::getCategories();
 
@@ -23,5 +24,7 @@ if (isset($_POST["create_wiki"])) {
 }
 
 $wikis = Wiki::getWikis();
+$lastWiki = Wiki::lastWikis();
+$lastCategories = Wiki::lasCategories();
 
 
