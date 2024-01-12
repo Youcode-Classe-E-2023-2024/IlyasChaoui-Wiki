@@ -26,6 +26,15 @@ class Tag {
         return true;
     }
 
+    static function deleteWiki_Tag($wiki_id) {
+        global $db;
+        $sql = "DELETE FROM wiki_tag WHERE wiki_id = :wiki_id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':wiki_id', $wiki_id);
+        $stmt->execute();
+        return true;
+    }
+
     static function getTags() {
         global $db;
         $sql = "SELECT * FROM tag";
@@ -45,10 +54,21 @@ class Tag {
 
     static function update_wiki_tag ($tag, $wiki_id) {
         global $db;
-        $sql = "UPDATE wiki_tag  SET tag_id = :tag_id WHERE wiki_id = :wiki_id";
+        $sql = "UPDATE wiki_tag  SET tag_id = :tag_id WHERE wiki_id = :wiki_id AND tag_id = :tag_id";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':tag_id', $tag);
         $stmt->bindParam(':wiki_id', $wiki_id);
+        $stmt->bindParam(':tag_id', $tag);
         $stmt->execute();
+    }
+
+    static function get_wiki_tag($wiki_id) {
+        global $db;
+        $sql = "SELECT tag.* FROM wiki_tag
+                JOIN tag ON wiki_tag.tag_id = tag.tag_id
+                WHERE wiki_tag.wiki_id = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$wiki_id]);
+        return $stmt->fetchAll();
     }
 }
