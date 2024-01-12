@@ -44,11 +44,10 @@ if(isset($_POST["add_category"])) {
     exit;
 }
 
-if(isset($_GET["edit_category"])) {
+if(isset($_POST["editCategory"])) {
     $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_SPECIAL_CHARS);
     $categoryId = filter_input(INPUT_POST, "category_id", FILTER_SANITIZE_SPECIAL_CHARS);
     Category::updateCategory($category, $categoryId);
-
     header("location: index.php?page=dashboard&add_category=true");
 }
 
