@@ -32,9 +32,7 @@ if (in_array($page . '_controller.php', $all_pages)) {
         include_once 'views/_layout.php';
     }
 } else {
-    header('HTTP/1.0 404 Not Found');
-    include_once 'views/404_view.php';
+    header("location :404.html");
     exit();
 }
 
-?>
