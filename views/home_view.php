@@ -14,54 +14,38 @@
 
     </header>
 
+    <h1 class="text-6xl ml-40 mt-10 font-bold">Last wikis:</h1>
     <div class="services">
+        <?php foreach ($lastWiki as $wiki) { ?>
+            <div class="service">
+                <img src="assets/images/services/icon1.png" alt="Who I am Icon" loading="lazy">
+                <h3><?= $wiki["title"] ?></h3><br>
+                <span class="bg-black  rounded-md text-white px-3 py-1 text-2lg uppercase font-medium"><?= $wiki["category"] ?></span><br><br>
+                <?php
+                $tags = Tag::get_wiki_tag($wiki["wiki_id"]);
+                foreach ($tags as $tag) { ?>
+                    <span class="bg-green-500 rounded-full mb-5 text-white px-3 py-1 text-2lg uppercase font-medium"><?= $tag["tag"] ?></span>
 
-        <div class="service">
-            <img src="assets/images/services/icon1.png" alt="Who I am Icon" loading="lazy">
-            <h3>Who I am</h3>
-            <p>
-                Lorem ipsum dolor sit amet,
-                cons ecte tur adipi scing elit,
-                sed do eius mod tempor inci didunt
-                ut labore et dolore magna aliqua.
-            </p>
-        </div>
-
-        <div class="service">
-            <img src="assets/images/services/icon2.png" alt="Why I Write Icon" loading="lazy">
-            <h3>Why I Write</h3>
-            <p>
-                Lorem ipsum dolor sit amet,
-                cons ecte tur adipi scing elit,
-                sed do eius mod tempor inci didunt
-                ut labore et dolore magna aliqua.
-            </p>
-        </div>
-
-        <div class="service">
-            <img src="assets/images/services/icon3.png" alt="What I Do Icon" loading="lazy">
-            <h3>What I Do</h3>
-            <p>
-                Lorem ipsum dolor sit amet,
-                cons ecte tur adipi scing elit,
-                sed do eius mod tempor inci didunt
-                ut labore et dolore magna aliqua.
-            </p>
-        </div>
-
+                <?php } ?>
+                <p>
+                    <?= $wiki["content"] ?>
+                </p>
+            </div>
+        <?php } ?>
     </div>
-
+    <h1 class="text-6xl ml-40 mt-10 font-bold">All wikis:</h1>
     <div class="main-content">
 
         <div class="blog" id="Blog">
 
 
-                <article class="posts">
-                    <?php foreach ($wikis as$wiki) { ?>
+            <article class="posts">
+                <?php foreach ($wikis as $wiki) { ?>
                     <a href="index.php?page=wiki&wiki_id=<?= $wiki["wiki_id"] ?>">
                         <div class="post">
                             <div class="post-image">
-                                <img src="assets/images/posts/post-1.png" alt="How to Ace Your Life Image" loading="lazy">
+                                <img src="assets/images/posts/post-1.png" alt="How to Ace Your Life Image"
+                                     loading="lazy">
                             </div>
                             <div class="post-content">
                                 <a class="post-title"><?= $wiki["title"] ?></a>
@@ -81,9 +65,9 @@
                             </div>
                         </div>
                     </a>
-                    <?php } ?>
+                <?php } ?>
 
-                </article>
+            </article>
 
 
             <div class="pagination-blog">
@@ -97,76 +81,17 @@
         <div class="sidebar">
 
             <div class="popular-posts-side">
-                <h2>POPULAR POSTS</h2>
+                <h2>Last categories:</h2>
+                        <?php foreach ($lastCategories as $category) { ?>
                 <div class="popular-posts">
                     <div class="popular-post">
-                        <div class="popular-post-image">
-                            <img src="assets/images/posts/post-1.png" alt="How to Ace Your Life Image" loading="lazy">
-                        </div>
-                        <div class="popular-post-content">
-                            <a href="#" class="popular-post-title">How to Ace Your Life</a>
-                            <p class="popular-post-desc">
-                                Etiam placerat velit vitae dui blandit sollicitudin.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="popular-post">
-                        <div class="popular-post-image">
-                            <img src="assets/images/posts/post-2.png" alt="The Joys Of Being A Morning Person Image"
-                                 loading="lazy">
-                        </div>
-                        <div class="popular-post-content">
-                            <a href="#" class="popular-post-title">The Joys Of Being A …</a>
-                            <p class="popular-post-desc">
-                                Etiam placerat velit vitae dui blandit sollicitudin.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="popular-post">
-                        <div class="popular-post-image">
-                            <img src="assets/images/posts/post-3.png" alt="Travelling with Strangers Image"
-                                 loading="lazy">
-                        </div>
-                        <div class="popular-post-content">
-                            <a href="#" class="popular-post-title">Travelling with Stra…</a>
-                            <p class="popular-post-desc">
-                                Etiam placerat velit vitae dui blandit sollicitudin.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="popular-post">
-                        <div class="popular-post-image">
-                            <img src="assets/images/posts/post-4.png" alt="What I’ve learned from road trips Image"
-                                 loading="lazy">
-                        </div>
-                        <div class="popular-post-content">
-                            <a href="#" class="popular-post-title">What I’ve learned fr…</a>
-                            <p class="popular-post-desc">
-                                Etiam placerat velit vitae dui blandit sollicitudin.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="popular-post">
-                        <div class="popular-post-image">
-                            <img src="assets/images/posts/post-4.png" alt="Why Long Walks Will Change Your Life Image"
-                                 loading="lazy">
-                        </div>
-                        <div class="popular-post-content">
-                            <a href="#" class="popular-post-title">Why Long Walks Will …</a>
-                            <p class="popular-post-desc">
-                                Etiam placerat velit vitae dui blandit sollicitudin.
-                            </p>
-                        </div>
+                            <div class="popular-post-content">
+                                <h1 class="text-2xl font-bold">Category <?= $category["category_id"] ?> </h1>
+                                <a href="#" class="text-xl"><?= $category["category"] ?></a>
+                            </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="archives-side">
-                <h2>ARCHIVES</h2>
-                <div class="archive-box"><a href="#">January 2020</a></div>
-                <div class="archive-box"><a href="#">December 2019</a></div>
-                <div class="archive-box"><a href="#">September 2019</a></div>
-                <div class="archive-box"><a href="#">June 2019</a></div>
+                        <?php } ?>
             </div>
 
             <div class="social-side">
@@ -189,7 +114,6 @@
         </div>
 
     </div>
-
 
 
 </div>
