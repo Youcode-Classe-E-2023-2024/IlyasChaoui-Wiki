@@ -659,6 +659,7 @@ footer, header, hgroup, menu, nav, section {
 
 .container .main-content .sidebar .archives-side .archive-box {
     background: var(--white);
+
     margin: 1rem 0rem;
     padding: 1rem 2rem;
     box-shadow: var(--box-shadow);
