@@ -32,7 +32,6 @@ class Wiki
         $stmt->bindParam(':wiki_id', $wiki_id, 1);
         $stmt->execute();
 
-
         foreach ($oldTags as $tag) {
             Tag::deleteWiki_Tag($wiki_id);
         }
@@ -70,6 +69,31 @@ class Wiki
         $stmt = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    static function lastWikis()
+    {
+        global $db;
+        $result = $db->query("SELECT *
+        FROM wiki
+        JOIN category 
+        ON wiki.category_id = category.category_id
+        WHERE archived = 0
+        ORDER BY created_date DESC
+        LIMIT 3;
+        ");
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    static function lasCategories()
+    {
+        global $db;
+        $result = $db->query("SELECT *
+        FROM category
+        ORDER BY created_at DESC
+        LIMIT 4;
+        ");
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getArchivedWikis()
