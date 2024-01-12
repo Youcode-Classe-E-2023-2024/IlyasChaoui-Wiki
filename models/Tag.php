@@ -43,6 +43,19 @@ class Tag {
         return $stmt->fetchAll();
     }
 
+    static function CheckTag( $tag) {
+        global $db;
+        $sql = "SELECT * FROM tag WHERE tag = :tag";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':tag', $tag);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result)
+            return $result;
+        return false;
+    }
+
     static function wiki_tag ($tag, $wikiId) {
         global $db;
         $sql = "INSERT INTO wiki_tag (tag_id, wiki_id) VALUES (:tag_id, :wiki_id)";
@@ -61,6 +74,8 @@ class Tag {
         $stmt->bindParam(':tag_id', $tag);
         $stmt->execute();
     }
+
+
 
     static function get_wiki_tag($wiki_id) {
         global $db;
