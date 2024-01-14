@@ -6,7 +6,6 @@ if (empty($_SESSION["admin"])) {
 
 if ($_SESSION["login"]) {
     $userData = User::getUser($_SESSION["user_id"]);
-//    dd($userData);
 }
 
 if (isset($_POST['logout'])) {
@@ -76,8 +75,17 @@ if (isset($_GET["category_id"])) {
     header("location: index.php?page=dashboard&add_category=true");
 }
 
+$totalWikis = count(Wiki::getWikis());
+$totalUsers = count(User::getAll());
+$totalTags = count(Tag::getTags());
+$totalCategories = count(Category::getCategories());
 
-
+$dataPoints = array(
+    array("y" => $totalUsers, "label" => "Users"),
+    array("y" => $totalCategories, "label" => "Categories"),
+    array("y" => $totalTags, "label" => "Tags"),
+    array("y" => $totalWikis, "label" => "Wikis")
+);
 
 
 
