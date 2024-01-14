@@ -44,7 +44,7 @@
         <div class="login">
             <form autocomplete="off" enctype="multipart/form-data">
                 <label for="chk" class="mb-28" aria-hidden="true">Register</label>
-                <input class="login-input" name="picture" type="file" accept="image/*" id="imageInput"
+                <input class="login-input" name="user_picture" type="file" accept="image/*" id="imageInput"
                        style="display: none">
 
                 <!-- Circular image container -->
