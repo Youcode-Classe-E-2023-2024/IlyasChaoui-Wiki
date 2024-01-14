@@ -46,7 +46,7 @@ sign.addEventListener('click', (event) => {
     formData.append('username', userName);
     formData.append('email', signUpEmail);
     formData.append('password', signUpPassword);
-    formData.append('picture', signUpImage);
+    formData.append('user_picture', signUpImage);
     formData.append('req', 'signup');
 
     // AJAX request
@@ -128,12 +128,11 @@ login.addEventListener('click', (event) => {
             console.log(data);
             if (data.success) {
                 console.log(data.success);
-                // loginForm.style.display = 'none';
+                loginForm.style.display = 'none';
                 // spinnerWrapper.style.display = 'block';
                 // setTimeout(() => {
-                //     window.location.href = 'index.php?page=home&success';
                 // }, 3000);
-                window.location.href = `index.php?page=${data.success}&success`;
+                    window.location.href = `index.php?page=${data.success}&success`;
 
             } else if (data.error) {
                 console.log(data.error);
