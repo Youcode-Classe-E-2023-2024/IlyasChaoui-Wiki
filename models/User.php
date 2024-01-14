@@ -19,7 +19,7 @@ class User
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $this->id = $user['user_id'];
-        $this->picture = $user['picture'];
+        $this->picture = $user['user_picture'];
         $this->email = $user['email'];
         $this->username = $user['username'];
         $this->password = $user['password'];
@@ -72,7 +72,7 @@ class User
 
     static function register($username, $email, $password, $picture, $db)
     {
-        $sql = "INSERT INTO users (username, email, password, picture) VALUES (:username, :email, :password, :picture)";
+        $sql = "INSERT INTO users (username, email, password, user_picture) VALUES (:username, :email, :password, :picture)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
