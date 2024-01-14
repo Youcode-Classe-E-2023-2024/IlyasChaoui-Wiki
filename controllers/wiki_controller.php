@@ -19,6 +19,7 @@ if (isset($_GET["wikiId"])) {
 if (isset($_GET["wiki_id"])) {
     $wikiId = $_GET["wiki_id"];
     $singleWiki = Wiki::getWiki($wikiId);
+//    dd($singleWiki);
     $tags = Tag::get_wiki_tag($wikiId);
 }
 

@@ -32,7 +32,7 @@ if (in_array($page . '_controller.php', $all_pages)) {
         include_once 'views/_layout.php';
     }
 } else {
-    header("location :404.html");
+    header("location: index.php?page=404");
     exit();
 }
 
