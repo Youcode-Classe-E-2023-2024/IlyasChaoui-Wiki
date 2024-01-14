@@ -8,9 +8,9 @@
         <!-- Statistics Cards -->
         <div id="dashboard_section">
             <h2 class="font-bold text-center ml-4 mt-10">Dashboard</h2>
-            <div class="grid grid-cols-1 mt-10 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4" style="margin-left: 430px">
+            <div class="grid grid-cols-1 mt-10 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
                 <div
-                        class="bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-gray-600 text-white font-medium group">
+                        class="bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-red-500 text-white font-medium group">
                     <div
                             class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
                         <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -20,12 +20,42 @@
                         </svg>
                     </div>
                     <div class="text-right">
-                        <p id="user-count" class="text-2xl">557</p>
+                        <p id="user-count" class="text-2xl"><?= $totalUsers ?></p>
+                        <p>Users</p>
+                    </div>
+                </div>
+                <div
+                        class="bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-green-600 text-white font-medium group">
+                    <div
+                            class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             class="stroke-current text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </div>
+                    <div class="text-right">
+                        <p id="user-count" class="text-2xl"><?= $totalWikis ?></p>
+                        <p>Products</p>
+                    </div>
+                </div>
+                <div
+                        class="bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-yellow-300 text-white font-medium group">
+                    <div
+                            class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
+                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             class="stroke-current text-gray-800 transform transition-transform duration-500 ease-in-out">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </div>
+                    <div class="text-right">
+                        <p id="user-count" class="text-2xl"><?= $totalTags ?></p>
                         <p>Tags</p>
                     </div>
                 </div>
                 <div
-                        class="bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-gray-600 text-white font-medium group">
+                        class="bg-gray-800 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-blue-500 text-white font-medium group">
                     <div
                             class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
                         <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -35,17 +65,17 @@
                         </svg>
                     </div>
                     <div class="text-right">
-                        <p id="product-count" class="text-2xl">257</p>
+                        <p id="product-count" class="text-2xl"><?= $totalCategories ?></p>
                         <p>Categories</p>
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-center">
-                <div class="mt-5 bg-gray-900 text-gray-800" style="width: 600px;">
-                    <div class="shadow-lg p-4" id="chart"></div>
-                </div>
+            <div class="flex justify-center items-center w-full h-full md:w-96 md:h-96 mt-8" style="margin-left: 450px">
+                <canvas id="myChart" class="block" width="100" height="100"></canvas>
             </div>
+
+
         </div>
 
         <!-- tag Table -->
@@ -675,5 +705,38 @@
         document.getElementById("product_section").classList.remove("hidden");
     </script>
 <?php } ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const data = {
+            labels: [
+                'Users',
+                'Categories',
+                'Tags',
+                'Wikis'
+            ],
+            datasets: [{
+                label: 'Site Data Overview',
+                data: [<?php echo $totalUsers; ?>, <?php echo $totalCategories; ?>, <?php echo $totalTags; ?>, <?php echo $totalWikis; ?>],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)'
+                ],
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    });
+</script>
 
 
