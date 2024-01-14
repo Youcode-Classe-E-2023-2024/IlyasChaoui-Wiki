@@ -38,7 +38,6 @@ if (isset($_POST["req"]) && $_POST["req"] == "login") {
     $password = $_POST["password"];
     $userChecker = User::user_checker($email, $db);
 
-
     if (!$userChecker) {
         echo json_encode(["error" => "User does not exist."]);
     } elseif (!password_verify($password, $userChecker["password"])) {
