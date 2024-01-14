@@ -2,16 +2,16 @@
 
 class Wiki
 {
-    static function addWiki($title, $content, $tags, $category, $creator, $created_date)
+    static function addWiki($title, $content,$picture, $tags, $category, $creator)
     {
         global $db;
-        $sql = "INSERT INTO wiki (title, content, category_id, creator, created_date) VALUES (:title, :content, :category, :creator, :created_date)";
+        $sql = "INSERT INTO wiki (title, content, picture, category_id, creator) VALUES (:title, :content, :picture, :category, :creator)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':content', $content);
+        $stmt->bindParam(':picture', $picture);
         $stmt->bindParam(':category', $category);
         $stmt->bindParam(':creator', $creator);
-        $stmt->bindParam(':created_date', $created_date);
         $stmt->execute();
         $wikiId = $db->lastInsertId();
 
@@ -50,7 +50,7 @@ class Wiki
         $stmt->execute();
     }
 
-    function archiveWiki($wiki_id)
+    static function archiveWiki($wiki_id)
     {
         global $db;
         $sql = "UPDATE wiki SET archived=1 WHERE wiki_id = :wiki_id";
@@ -65,7 +65,7 @@ class Wiki
         $sql = "SELECT * FROM wiki 
          JOIN category 
          ON wiki.category_id = category.category_id
-         WHERE archived = 0";
+         WHERE archived = 0 ORDER BY created_date DESC ";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -80,7 +80,7 @@ class Wiki
         ON wiki.category_id = category.category_id
         WHERE archived = 0
         ORDER BY created_date DESC
-        LIMIT 3;
+        LIMIT 5;
         ");
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -108,7 +108,7 @@ class Wiki
     static function getWiki($wikiId)
     {
         global $db;
-        $sql = "SELECT wiki.*, users.username, users.picture, users.email, category.category FROM wiki 
+        $sql = "SELECT wiki.*, users.username, users.user_picture, users.email, category.category FROM wiki 
          JOIN users ON wiki.creator = users.user_id
          JOIN category ON wiki.category_id = category.category_id
          WHERE archived = 0 AND wiki_id = ? ORDER BY wiki_id DESC";
