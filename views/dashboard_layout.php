@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.x/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= ucfirst($page) ?></title>
@@ -43,7 +44,7 @@
             </li>
             <li>
                 <form action="index.php?page=dashboard" method="POST">
-                    <a href="#" class="flex items-center mr-4 hover:text-blue-100">
+                    <a class="flex items-center mr-4 hover:text-blue-100">
                                 <span class="inline-flex mr-1">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +138,7 @@
             <div class="space-y-6 hidden md:block">
                 <div class="flex flex-col items-center gap-x-2">
                     <img class="object-cover w-16 h-16 rounded-lg"
-                         src="./assets/img/<?= $userData["picture"] ?>"
+                         src="./assets/img/<?= $userData["user_picture"] ?>"
                          alt="">
                     <div class="flex flex-col items-center justify-center">
                         <h1 class="text-xl font-semibold  capitalize text-white"><?= $userData["username"] ?></h1>
